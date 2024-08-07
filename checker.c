@@ -1,39 +1,42 @@
 #include <stdio.h>
 #include <assert.h>
 
+// Check if temperature is within acceptable range
 int isTemperatureOk(float temperature) {
   return (temperature >= 0 && temperature <= 45);
 }
 
+// Check if State of Charge is within acceptable range
 int isSocOk(float soc) {
   return (soc >= 20 && soc <= 80);
 }
 
+// Check if Charge Rate is within acceptable range
 int isChargeRateOk(float chargeRate) {
   return (chargeRate <= 0.8);
 }
 
-void printErrorMessage(float temperature, float soc, float chargeRate) {
-  if (!isTemperatureOk(temperature)) {
+// Print error message based on which checks fail
+void printErrorMessage(int tempOk, int socOk, int chargeRateOk) {
+  if (!tempOk) {
     printf("Temperature out of range!\n");
   }
-  if (!isSocOk(soc)) {
+  if (!socOk) {
     printf("State of Charge out of range!\n");
   }
-  if (!isChargeRateOk(chargeRate)) {
+  if (!chargeRateOk) {
     printf("Charge Rate out of range!\n");
   }
 }
 
+// Check if all battery parameters are within acceptable ranges
 int batteryIsOk(float temperature, float soc, float chargeRate) {
   int tempOk = isTemperatureOk(temperature);
   int socOk = isSocOk(soc);
   int chargeRateOk = isChargeRateOk(chargeRate);
 
-  if (!tempOk || !socOk || !chargeRateOk) {
-    printErrorMessage(temperature, soc, chargeRate);
-  }
-  
+  printErrorMessage(tempOk, socOk, chargeRateOk);
+
   return tempOk && socOk && chargeRateOk;
 }
 
