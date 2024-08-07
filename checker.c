@@ -16,26 +16,28 @@ int isChargeRateOk(float chargeRate) {
   return (chargeRate <= 0.8);
 }
 
-// Print error message based on which checks fail
-void printErrorMessage(int tempOk, int socOk, int chargeRateOk) {
-  if (!tempOk) {
-    printf("Temperature out of range!\n");
-  }
-  if (!socOk) {
-    printf("State of Charge out of range!\n");
-  }
-  if (!chargeRateOk) {
-    printf("Charge Rate out of range!\n");
-  }
+// Print error message based on specific parameter
+void printTemperatureError() {
+  printf("Temperature out of range!\n");
 }
 
-// Check if all battery parameters are within acceptable ranges
+void printSocError() {
+  printf("State of Charge out of range!\n");
+}
+
+void printChargeRateError() {
+  printf("Charge Rate out of range!\n");
+}
+
+// Check battery status and print appropriate error messages
 int batteryIsOk(float temperature, float soc, float chargeRate) {
   int tempOk = isTemperatureOk(temperature);
   int socOk = isSocOk(soc);
   int chargeRateOk = isChargeRateOk(chargeRate);
 
-  printErrorMessage(tempOk, socOk, chargeRateOk);
+  if (!tempOk) printTemperatureError();
+  if (!socOk) printSocError();
+  if (!chargeRateOk) printChargeRateError();
 
   return tempOk && socOk && chargeRateOk;
 }
